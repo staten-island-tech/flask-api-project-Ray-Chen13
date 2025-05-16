@@ -7,34 +7,24 @@ app = Flask(__name__)
 def index():
     response = requests.get("https://www.amiiboapi.com/api/amiibo/?name=mario")
     data = response.json()
-    marios = []
+    mario_list = data
 
-    for mario in data.get('amiibo', []):
-        marios.append({
-            'series': mario['amiiboSeries'],
-            'character': mario['character'],
-            'id': mario['head'] + mario['tail'],  # Construct unique ID
-            'image': mario.get('image')
+    games = []
+
+    for game in mario_list:
+        games.append({
+            'amiiboSeries': game['amiiboSeries'].capitalize(),
+            'head': game['head'] 
         })
 
-    return render_template("index.html", marios=marios)
-
-@app.route("/mario/<mario_id>")
-def mario_detail(mario_id):
+        return render_template("index_html", games = games)
+    
+@app.route("/pokemon/<int:id>")
+def game_detail(id):
     response = requests.get("https://www.amiiboapi.com/api/amiibo/?name=mario")
     data = response.json()
 
-    selected = None
-    for mario in data.get('amiibo', []):
-        id = mario['head'] + mario['tail']
-        if id == mario_id:
-            selected = mario
-            break
-
-    if selected:
-        return render_template("detail.html", mario=selected)
-    else:
-        return "Mario not found", 404
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    amiiboSeries = data.get('amiiboSeries').capitalize()
+    character = data.get('character)').capitalize()
+    head = data.get('head')
+    name = data.get('name').capitalize()
