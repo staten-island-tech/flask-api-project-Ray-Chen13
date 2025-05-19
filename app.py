@@ -14,17 +14,30 @@ def index():
     for game in mario_list:
         games.append({
             'amiiboSeries': game['amiiboSeries'].capitalize(),
-            'head': game['head'] 
+            'head': game['head'],
+            'tail': game['tail'],
         })
 
         return render_template("index_html", games = games)
     
 @app.route("/pokemon/<int:id>")
-def game_detail(id):
+def game_detail(head):
     response = requests.get("https://www.amiiboapi.com/api/amiibo/?name=mario")
     data = response.json()
 
     amiiboSeries = data.get('amiiboSeries').capitalize()
     character = data.get('character)').capitalize()
-    head = data.get('head')
     name = data.get('name').capitalize()
+    tail = data.get('tail')
+    image_url = f"https://raw.githubusercontent.com/N3evin/AmiiboAPI/master/images/icon_{head}-{tail}.png"
+    image = image_url
+
+    return render_template("mario.html", mario={
+        'amiiboSeries': amiiboSeries,
+        'character': character,
+        'image': image_url,
+        'name': name, 
+        'tail': tail
+    })
+if __name__ == '__main__':
+    app.run(debug=True)
