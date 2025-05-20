@@ -7,7 +7,7 @@ app = Flask(__name__)
 def index():
     response = requests.get("https://www.amiiboapi.com/api/amiibo/?name=mario")
     data = response.json()
-    mario_list = data
+    mario_list = data['amiibo']
 
     games = []
 
@@ -18,10 +18,10 @@ def index():
             'tail': game['tail'],
         })
 
-        return render_template("index_html", games = games)
+    return render_template("index.html", games=games)
     
 @app.route("/pokemon/<int:id>")
-def game_detail(head):
+def game_detail(head):  
     response = requests.get("https://www.amiiboapi.com/api/amiibo/?name=mario")
     data = response.json()
 
