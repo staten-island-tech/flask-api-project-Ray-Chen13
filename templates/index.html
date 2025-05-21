@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title>Mario Amiibo List</title>
+    <meta charset="UTF-8">
+    <title>Mario Amiibos</title>
+    <h1>Mario Amiibos</h1>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
     <div class="container">
-      <h1>Mario Amiibo Variants</h1>
-      <ul>
+      <h1>Mario Amiibos</h1>
+      <div class="card-container">
         {% for game in games %}
-          <li>
-            <a href="{{ url_for('mario_detail', head=game.head, tail=game.tail) }}">
-              {{ game.name }} ({{ game.amiiboSeries }})
-            </a>
-          </li>
+          <a href="{{ url_for('game_detail', id=game.id) }}">
+            <div class="card">
+              <img src="{{ game.image }}" alt="{{ game.name }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ game.name }}</h5>
+              </div>
+            </div>
+          </a>
         {% endfor %}
-      </ul>
+      </div>
     </div>
   </body>
 </html>
