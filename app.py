@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    # Fetch the data from the API
     response = requests.get("https://www.amiiboapi.com/api/amiibo/?name=mario")
     data = response.json()
     mario_list = data['amiibo']
